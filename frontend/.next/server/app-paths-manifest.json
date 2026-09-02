@@ -1,8 +1,0 @@
-{
-  "/page": "app/page.js",
-  "/generators/[slug]/page": "app/generators/[slug]/page.js",
-  "/articles/[slug]/page": "app/articles/[slug]/page.js",
-  "/articles/page": "app/articles/page.js",
-  "/admin/generators/[id]/page": "app/admin/generators/[id]/page.js",
-  "/admin/page": "app/admin/page.js"
-}

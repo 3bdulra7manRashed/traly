@@ -1,27 +1,69 @@
-*.log
-.DS_Store
+# ==========================================
+# Laravel & Backend
+# ==========================================
+/vendor/
+/node_modules/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment & Credentials
 .env
 .env.backup
 .env.production
-.phpactor.json
-.phpunit.result.cache
-/.codex
-/.cursor/
-/.idea
-/.nova
-/.phpunit.cache
-/.vscode
-/.zed
-/auth.json
-/node_modules
-/public/build
-/public/fonts-manifest.dev.json
-/public/hot
-/public/storage
+.env.*.local
+auth.json
+
+# Laravel Storage & Cache
 /storage/*.key
 /storage/pail
-/vendor
+/storage/logs/*.log
+*.log
+/public/hot
+/public/storage
+/public/build
+/public/fonts-manifest.dev.json
+.phpunit.result.cache
+/.phpunit.cache
+
+# SQLite Databases
+database/*.sqlite
+database/*.sqlite-journal
+
+# IDEs & System Files
+.DS_Store
+Thumbs.db
+/.idea/
+/.vscode/
+/.zed/
+/.cursor/
+/.codex/
+/.nova/
+.phpactor.json
 _ide_helper.php
 Homestead.json
 Homestead.yaml
-Thumbs.db
+
+# ==========================================
+# Frontend (Next.js & React)
+# ==========================================
+/frontend/node_modules/
+frontend/node_modules/
+/frontend/.next/
+frontend/.next/
+/frontend/out/
+frontend/out/
+/frontend/build/
+frontend/build/
+frontend/.env*.local
+frontend/.env.local
+.next/
+out/
+build/
+dist/
+
+# Next.js bundle analysis & TypeScript caches
+.pnp
+.pnp.js
+*.tsbuildinfo
+next-env.d.ts
