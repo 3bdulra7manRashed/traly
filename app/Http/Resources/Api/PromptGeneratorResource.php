@@ -24,6 +24,7 @@ class PromptGeneratorResource extends JsonResource
             'slug' => $this->slug,
             'icon' => $this->icon,
             'short_description' => $this->short_description,
+            'prompt_template' => $this->prompt_template,
             'is_active' => $this->is_active,
             'order' => $this->order,
             'steps' => GeneratorStepResource::collection($this->whenLoaded('generatorSteps')),

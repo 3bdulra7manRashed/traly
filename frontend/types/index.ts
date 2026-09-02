@@ -8,23 +8,23 @@ export type FormFieldType =
   | "number";
 
 export interface FormField {
-  id: number;
+  id?: number;
   name: string;
   label: string;
   type: FormFieldType;
   placeholder?: string | null;
   help_text?: string | null;
-  options?: Record<string, string> | null;
+  options?: Record<string, string> | string[] | null;
   validation_rules?: string[] | null;
   conditional_rules?: Record<string, any> | null;
-  field_order: number;
+  field_order?: number;
 }
 
 export interface GeneratorStep {
-  id: number;
+  id?: number;
   title: string;
   description?: string | null;
-  step_order: number;
+  step_order?: number;
   fields?: FormField[];
 }
 
@@ -34,6 +34,7 @@ export interface PromptGenerator {
   slug: string;
   icon?: string | null;
   short_description?: string | null;
+  prompt_template?: string;
   is_active: boolean;
   order: number;
   steps?: GeneratorStep[];
