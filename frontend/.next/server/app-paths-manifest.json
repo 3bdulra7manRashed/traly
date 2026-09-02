@@ -1,0 +1,6 @@
+{
+  "/articles/page": "app/articles/page.js",
+  "/articles/[slug]/page": "app/articles/[slug]/page.js",
+  "/generators/page": "app/generators/page.js",
+  "/generators/[slug]/page": "app/generators/[slug]/page.js"
+}
