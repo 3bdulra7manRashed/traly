@@ -126,13 +126,20 @@ export default async function ArticleDetailPage({
       )}
 
       {/* Main Content Body */}
-      <article className="prose prose-invert prose-emerald max-w-none text-slate-200 text-base sm:text-lg leading-relaxed space-y-6">
-        {article.content.split("\n\n").map((paragraph, idx) => (
-          <p key={idx} className="leading-relaxed">
-            {paragraph}
-          </p>
-        ))}
-      </article>
+      {article.content.trim().startsWith("<") ? (
+        <article
+          className="article-content max-w-none text-slate-200 text-base sm:text-lg leading-relaxed space-y-4"
+          dangerouslySetInnerHTML={{ __html: article.content }}
+        />
+      ) : (
+        <article className="article-content max-w-none text-slate-200 text-base sm:text-lg leading-relaxed space-y-6">
+          {article.content.split("\n\n").map((paragraph, idx) => (
+            <p key={idx} className="leading-relaxed">
+              {paragraph}
+            </p>
+          ))}
+        </article>
+      )}
 
       {/* Tags / Keywords */}
       {article.keywords && article.keywords.length > 0 && (

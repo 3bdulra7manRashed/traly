@@ -15,6 +15,8 @@ import {
   Image as ImageIcon,
 } from "lucide-react";
 import Image from "next/image";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
+
 
 interface ArticleFormProps {
   initialData?: Article;
@@ -85,6 +87,13 @@ export function ArticleForm({ initialData }: ArticleFormProps) {
     e.preventDefault();
     setIsSubmitting(true);
     setErrors({});
+
+    const isContentEmpty = !content || content.trim() === "" || content === "<p></p>";
+    if (isContentEmpty) {
+      setErrors({ content: "محتوى المقال مطلوب" });
+      setIsSubmitting(false);
+      return;
+    }
 
     const payload = {
       title,
@@ -218,22 +227,23 @@ export function ArticleForm({ initialData }: ArticleFormProps) {
           </div>
 
           {/* Content */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-bold text-slate-200">
-              محتوى المقال بالكامل <span className="text-emerald-400">*</span>
-            </label>
-            <textarea
-              rows={12}
-              required
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="اكتب المحتوى التعليمي للمقال هنا..."
-              className="w-full rounded-xl border border-slate-800 bg-slate-900 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-emerald-500 focus:outline-none resize-y leading-relaxed"
-            />
-            {errors.content && (
-              <span className="text-xs text-rose-400">{errors.content}</span>
-            )}
-          </div>
+          <RichTextEditor
+            value={content}
+            onChange={(val) => {
+              setContent(val);
+              if (errors.content) {
+                setErrors((prev) => {
+                  const copy = { ...prev };
+                  delete copy.content;
+                  return copy;
+                });
+              }
+            }}
+            label="محتوى المقال بالكامل"
+            required
+            error={errors.content}
+            placeholder="اكتب المحتوى التعليمي للمقال هنا..."
+          />
         </div>
 
         {/* Right Column: Settings & Metadata */}
