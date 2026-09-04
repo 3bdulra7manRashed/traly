@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { PromptGenerator, PromptGenerationResult } from "@/types";
 import { FieldRenderer } from "./FieldRenderer";
 import { PromptResultModal } from "./PromptResultModal";
@@ -13,14 +14,21 @@ import {
   CheckCircle2,
   RotateCcw,
   Save,
+  History,
+  X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface DynamicFormRendererProps {
   generator: PromptGenerator;
+  initialValues?: Record<string, any>;
 }
 
-export function DynamicFormRenderer({ generator }: DynamicFormRendererProps) {
+export function DynamicFormRenderer({ generator, initialValues }: DynamicFormRendererProps) {
+  const searchParams = useSearchParams();
+  const repopulateId = searchParams.get("repopulate_id");
+  const [repopulatedFrom, setRepopulatedFrom] = useState<string | null>(null);
+
   const steps = generator.steps || [];
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [formValues, setFormValues] = useState<Record<string, any>>({});
@@ -32,6 +40,32 @@ export function DynamicFormRenderer({ generator }: DynamicFormRendererProps) {
   const [saveStatus, setSaveStatus] = useState<string | null>(null);
 
   const storageKey = `traly_draft_${generator.slug}`;
+
+  // Load from repopulate_id or initialValues if present
+  useEffect(() => {
+    if (initialValues && Object.keys(initialValues).length > 0) {
+      setFormValues(initialValues);
+      setRepopulatedFrom("إجابات سابقة");
+      return;
+    }
+
+    if (repopulateId) {
+      const genId = parseInt(repopulateId, 10);
+      if (!isNaN(genId)) {
+        api
+          .getUserGeneration(genId)
+          .then((data) => {
+            if (data && data.inputs_payload) {
+              setFormValues(data.inputs_payload);
+              setRepopulatedFrom(`الأمر السابق #${data.id}`);
+            }
+          })
+          .catch((err) => {
+            console.warn("Could not load previous generation inputs:", err);
+          });
+      }
+    }
+  }, [repopulateId, initialValues]);
 
   // 1. Load draft from localStorage on mount
   useEffect(() => {
@@ -206,6 +240,26 @@ export function DynamicFormRenderer({ generator }: DynamicFormRendererProps) {
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-4xl mx-auto">
+      {/* Repopulation Alert */}
+      {repopulatedFrom && (
+        <div className="flex items-center justify-between rounded-2xl bg-emerald-500/15 border border-emerald-500/30 px-5 py-3 text-xs text-emerald-300 backdrop-blur-md animate-in fade-in slide-in-from-top-1 duration-200">
+          <div className="flex items-center gap-2.5">
+            <History className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+            <span>
+              تم استرجاع وتعبئة إجاباتك السابقة ({repopulatedFrom}) بنجاح! يمكنك الآن تعديل أي حقل وإعادة توليد الأمر مباشرة.
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setRepopulatedFrom(null)}
+            className="p-1 rounded-lg text-emerald-400 hover:text-white hover:bg-emerald-500/20"
+            title="إغلاق"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+
       {/* Wizard Progress & Steps Bar */}
       <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-5 sm:p-6 backdrop-blur-xl shadow-xl shadow-slate-950/50">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">

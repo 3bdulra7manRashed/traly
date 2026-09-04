@@ -93,3 +93,26 @@ export interface ApiResponse<T> {
   meta?: PaginationMeta;
   errors?: Record<string, string[]>;
 }
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: "admin" | "user";
+}
+
+export interface UserGenerationItem {
+  id: number;
+  generator_id: number;
+  generator?: {
+    id: number;
+    title: string;
+    slug: string;
+    icon?: string | null;
+    short_description?: string | null;
+  };
+  inputs_payload: Record<string, any>;
+  compiled_prompt: string;
+  created_at: string;
+}
+

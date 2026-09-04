@@ -12,7 +12,46 @@ use Illuminate\Validation\ValidationException;
 class AuthController extends Controller
 {
     /**
-     * Authenticate admin user and issue API token.
+     * Register a new user and issue an API token.
+     */
+    public function register(Request $request): JsonResponse
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], [
+            'email.unique' => 'البريد الإلكتروني مسجل مسبقاً.',
+            'password.min' => 'كلمة المرور يجب ألا تقل عن 8 أحرف.',
+            'password.confirmed' => 'تأكيد كلمة المرور غير متطابق.',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'user',
+        ]);
+
+        $token = $user->createToken('auth-token')->plainTextToken;
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'token' => $token,
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'role' => $user->role,
+                ],
+            ],
+            'message' => 'تم إنشاء الحساب بنجاح',
+        ], 201);
+    }
+
+    /**
+     * Authenticate user and issue API token.
      */
     public function login(Request $request): JsonResponse
     {
@@ -29,7 +68,7 @@ class AuthController extends Controller
             ]);
         }
 
-        $token = $user->createToken('admin-token')->plainTextToken;
+        $token = $user->createToken('auth-token')->plainTextToken;
 
         return response()->json([
             'success' => true,
@@ -39,6 +78,7 @@ class AuthController extends Controller
                     'id' => $user->id,
                     'name' => $user->name,
                     'email' => $user->email,
+                    'role' => $user->role,
                 ],
             ],
             'message' => 'تم تسجيل الدخول بنجاح',
@@ -58,8 +98,44 @@ class AuthController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
+                'role' => $user->role,
             ],
             'message' => null,
+        ]);
+    }
+
+    /**
+     * Update current authenticated user profile.
+     */
+    public function updateProfile(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+        ], [
+            'password.min' => 'كلمة المرور يجب ألا تقل عن 8 أحرف.',
+            'password.confirmed' => 'تأكيد كلمة المرور غير متطابق.',
+        ]);
+
+        $user->name = $request->name;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role,
+            ],
+            'message' => 'تم تحديث الملف الشخصي بنجاح',
         ]);
     }
 

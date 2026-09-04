@@ -4,6 +4,8 @@ import {
   Category,
   PromptGenerationResult,
   PromptGenerator,
+  User,
+  UserGenerationItem,
 } from "@/types";
 
 const API_BASE_URL =
@@ -22,7 +24,7 @@ export class ApiError extends Error {
 
 function getAuthToken(): string | null {
   if (typeof window === "undefined") return null;
-  return localStorage.getItem("traly_admin_token");
+  return localStorage.getItem("traly_token") || localStorage.getItem("traly_admin_token");
 }
 
 async function fetchApi<T>(
@@ -277,6 +279,72 @@ export const api = {
 
   async deleteGenerator(id: number): Promise<void> {
     await fetchApi<void>(`/admin/generators/${id}`, {
+      method: "DELETE",
+    });
+  },
+
+  // User Authentication
+  async register(data: {
+    name: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+  }): Promise<{ token: string; user: User }> {
+    const res = await fetchApi<{ token: string; user: User }>("/auth/register", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    return res.data;
+  },
+
+  async userLogin(data: {
+    email: string;
+    password: string;
+  }): Promise<{ token: string; user: User }> {
+    const res = await fetchApi<{ token: string; user: User }>("/auth/login", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    return res.data;
+  },
+
+  async getUserProfile(): Promise<User> {
+    const res = await fetchApi<User>("/user/profile");
+    return res.data;
+  },
+
+  async updateUserProfile(data: {
+    name: string;
+    password?: string;
+    password_confirmation?: string;
+  }): Promise<User> {
+    const res = await fetchApi<User>("/user/profile", {
+      method: "PUT",
+      body: JSON.stringify(data),
+    });
+    return res.data;
+  },
+
+  // User History
+  async getUserGenerations(params?: {
+    page?: number;
+    search?: string;
+  }): Promise<ApiResponse<UserGenerationItem[]>> {
+    const query = new URLSearchParams();
+    if (params?.page) query.append("page", params.page.toString());
+    if (params?.search) query.append("search", params.search);
+
+    const qs = query.toString();
+    return await fetchApi<UserGenerationItem[]>(`/user/generations${qs ? `?${qs}` : ""}`);
+  },
+
+  async getUserGeneration(id: number): Promise<UserGenerationItem> {
+    const res = await fetchApi<UserGenerationItem>(`/user/generations/${id}`);
+    return res.data;
+  },
+
+  async deleteUserGeneration(id: number): Promise<void> {
+    await fetchApi<void>(`/user/generations/${id}`, {
       method: "DELETE",
     });
   },

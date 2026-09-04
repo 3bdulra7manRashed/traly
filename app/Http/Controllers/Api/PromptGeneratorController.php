@@ -68,7 +68,7 @@ class PromptGeneratorController extends Controller
         );
 
         $promptGeneration = PromptGeneration::create([
-            'user_id' => $request->user()?->id,
+            'user_id' => $request->user('sanctum')?->id ?? $request->user()?->id,
             'generator_id' => $generator->id,
             'inputs_payload' => $inputs,
             'compiled_prompt' => $compiledPrompt,

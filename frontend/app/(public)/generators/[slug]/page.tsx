@@ -72,7 +72,13 @@ export default async function GeneratorDetailPage({
       </div>
 
       {/* Dynamic Multi-Step Form Wizard */}
-      <DynamicFormRenderer generator={generator} />
+      <React.Suspense
+        fallback={
+          <div className="w-full max-w-4xl mx-auto h-[450px] rounded-2xl border border-slate-800 bg-slate-900/40 animate-pulse" />
+        }
+      >
+        <DynamicFormRenderer generator={generator} />
+      </React.Suspense>
     </div>
   );
 }

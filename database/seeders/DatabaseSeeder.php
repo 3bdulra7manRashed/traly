@@ -21,9 +21,13 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'مدير منصة ترالي',
                 'password' => Hash::make('password'),
+                'role' => 'admin',
                 'email_verified_at' => now(),
             ]
         );
+        if ($admin->role !== 'admin') {
+            $admin->update(['role' => 'admin']);
+        }
 
         // 2. Create Knowledge Categories
         $categoriesData = [
