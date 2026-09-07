@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Cairo } from "next/font/google";
+import { Readex_Pro } from "next/font/google";
 import "./globals.css";
 
-const cairo = Cairo({
+const readexPro = Readex_Pro({
   subsets: ["arabic", "latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-cairo",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-readex",
   display: "swap",
 });
 
@@ -36,8 +36,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" className={cairo.variable}>
-      <body className="min-h-screen bg-slate-950 text-slate-100 antialiased selection:bg-emerald-500/30 selection:text-emerald-200 font-sans">
+    <html lang="ar" dir="rtl" className={readexPro.variable}>
+      <body className="min-h-screen bg-[#070B11] text-slate-100 antialiased selection:bg-emerald-500/30 selection:text-emerald-200 font-sans">
         {children}
       </body>
     </html>

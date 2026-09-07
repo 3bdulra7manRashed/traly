@@ -1,15 +1,18 @@
+import React from "react";
 import Link from "next/link";
 import { api } from "@/lib/api";
-import { GeneratorCard } from "@/components/ui/GeneratorCard";
-import { ArticleCard } from "@/components/ui/ArticleCard";
-import { Article, PromptGenerator } from "@/types";
+import { PromptGenerator, Article } from "@/types";
+import { PromptLaunchpad } from "@/components/home/PromptLaunchpad";
+import { GeneratorsSection } from "@/components/home/GeneratorsSection";
+import { SavedPromptsSection } from "@/components/home/SavedPromptsSection";
+import { KnowledgeHubSection } from "@/components/home/KnowledgeHubSection";
+import { CtaBanner } from "@/components/home/CtaBanner";
 import {
   Sparkles,
-  ArrowLeft,
   ShieldCheck,
   Zap,
-  BookOpen,
   CheckCircle2,
+  Compass,
 } from "lucide-react";
 
 export const revalidate = 60;
@@ -30,80 +33,77 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="flex flex-col gap-20 pb-20">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
-        {/* Background Gradient Mesh */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/10 blur-[140px] pointer-events-none rounded-full" />
-        <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-teal-500/10 blur-[120px] pointer-events-none rounded-full" />
+    <div className="relative min-h-screen bg-[#070B11] text-slate-100 overflow-hidden flex flex-col gap-24 pb-24">
+      {/* Background Matrix Pattern Texture (4% opacity across entire page) */}
+      <div className="fixed inset-0 matrix-pattern pointer-events-none z-0" />
 
-        <div className="container relative mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl flex flex-col items-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-300 shadow-sm shadow-emerald-950/40 backdrop-blur-md mb-6 animate-fadeIn">
+      {/* =========================================================================
+          HERO SECTION: Neural Glow Mesh Gradient & LLM Prompt-Search Launchpad
+          ========================================================================= */}
+      <section className="relative pt-12 pb-8 md:pt-20 md:pb-14 overflow-hidden z-10">
+        {/* Dynamic Neural Mesh Glow Elements */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[900px] h-[550px] sm:h-[650px] neural-mesh-hero pointer-events-none animate-glow-slow" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[450px] sm:w-[600px] h-[450px] sm:h-[600px] neural-orb-emerald blur-[130px] pointer-events-none" />
+        <div className="absolute top-1/3 left-1/4 w-[380px] h-[380px] neural-orb-cobalt blur-[140px] pointer-events-none" />
+
+        <div className="container relative mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center max-w-5xl">
+          {/* Subtle Dignified Pre-title Badge */}
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-[#0B1118]/80 px-4 py-1.5 text-xs font-semibold text-emerald-300 shadow-md shadow-emerald-950/40 backdrop-blur-xl mb-6">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981] animate-pulse" />
             <Sparkles className="h-3.5 w-3.5 text-emerald-400" />
             <span>المنصة الأولى لهندسة الأوامر التربوية المتخصصة</span>
           </div>
 
-          {/* Main Headline */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-[1.2] mb-6">
-            نوظف الذكاء الاصطناعي{" "}
-            <span className="bg-gradient-to-l from-emerald-400 via-teal-300 to-emerald-200 bg-clip-text text-transparent">
-              في خدمة المربين وصناع الأثر
+          {/* Main Headline (Bold, High-Contrast) */}
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-[1.2] mb-6">
+            أدوات ذكية تصنع{" "}
+            <span className="bg-gradient-to-l from-emerald-400 via-teal-300 to-emerald-200 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+              أثراً تربوياً حقيقياً
             </span>
           </h1>
 
-          {/* Subtitle */}
-          <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-2xl mb-10">
-            توليد أوامر ذكية، دقيقة، وموجهة للنماذج اللغوية الكبرى لإعداد الخطط التعليمية، المبادرات، وتأسيس المحاضن التربوية بأعلى المعايير القيمية.
+          {/* Subtitle from image_6.png text area */}
+          <p className="text-sm sm:text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl mb-10 font-normal">
+            منصة رائدة تمكّن المربين والمعلمين من هندسة وتوليد أوامر ذكاء اصطناعي موجهة بدقة للنماذج اللغوية الكبرى، لبناء المحتوى القيمي، وتأسيس المحاضن، وإطلاق المبادرات بأعلى المعايير التربوية.
           </p>
 
-          {/* Hero CTAs */}
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/generators"
-              className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-7 py-3.5 text-base font-bold text-white shadow-xl shadow-emerald-950/60 hover:from-emerald-500 hover:to-teal-500 active:scale-95 transition-all"
-            >
-              <Sparkles className="h-5 w-5" />
-              استكشف الأوامر الذكية
-            </Link>
+          {/* LLM Prompt-Search Launchpad with Suggestions Starters */}
+          <PromptLaunchpad />
 
-            <Link
-              href="/articles"
-              className="flex items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/80 px-7 py-3.5 text-base font-semibold text-slate-200 hover:border-slate-700 hover:bg-slate-850 hover:text-white transition-all"
-            >
-              <BookOpen className="h-5 w-5 text-slate-400" />
-              المدونة والمعرفة
-            </Link>
-          </div>
-
-          {/* Value Props */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-16 w-full max-w-3xl pt-10 border-t border-slate-800/80 text-right">
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-900/40 border border-slate-800/60">
-              <ShieldCheck className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+          {/* Micro Value Props Bar */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-14 w-full max-w-4xl pt-8 border-t border-slate-800/80 text-right">
+            <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-[#0B1118]/60 border border-slate-800/80 backdrop-blur-md">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-forest-900/80 border border-emerald-500/30 text-emerald-400 flex-shrink-0">
+                <ShieldCheck className="h-5 w-5" />
+              </div>
               <div>
-                <h4 className="text-sm font-bold text-white">أصالة قيمية</h4>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  مصممة خصيصاً لتراعي السياق التربوي والأخلاقي
+                <h4 className="text-xs sm:text-sm font-bold text-white">أصالة قيمية ومعرفية</h4>
+                <p className="text-[11px] sm:text-xs text-slate-400 mt-0.5 leading-relaxed">
+                  أوامر مصممة خصيصاً لتراعي السياق التربوي والأخلاقي الموثوق.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-900/40 border border-slate-800/60">
-              <Zap className="h-5 w-5 text-teal-400 flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-[#0B1118]/60 border border-slate-800/80 backdrop-blur-md">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-forest-900/80 border border-emerald-500/30 text-teal-400 flex-shrink-0">
+                <Zap className="h-5 w-5" />
+              </div>
               <div>
-                <h4 className="text-sm font-bold text-white">تكامل فوري</h4>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  روابط تشغيل مباشرة في ChatGPT و Claude و Gemini
+                <h4 className="text-xs sm:text-sm font-bold text-white">تكامل مباشر مع LLMs</h4>
+                <p className="text-[11px] sm:text-xs text-slate-400 mt-0.5 leading-relaxed">
+                  روابط تشغيل فورية بنقرة واحدة في ChatGPT و Claude و Gemini.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-900/40 border border-slate-800/60">
-              <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-[#0B1118]/60 border border-slate-800/80 backdrop-blur-md">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-forest-900/80 border border-emerald-500/30 text-emerald-400 flex-shrink-0">
+                <CheckCircle2 className="h-5 w-5" />
+              </div>
               <div>
-                <h4 className="text-sm font-bold text-white">نماذج تفاعلية</h4>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  معالج إرشادي خطوة بخطوة يضمن شمولية المدخلات
+                <h4 className="text-xs sm:text-sm font-bold text-white">معالج إرشادي ذكي</h4>
+                <p className="text-[11px] sm:text-xs text-slate-400 mt-0.5 leading-relaxed">
+                  خطوات تفاعلية تضمن دقة وشمولية مدخلاتك التربوية.
                 </p>
               </div>
             </div>
@@ -111,99 +111,34 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Featured Generators Section */}
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 pb-4 border-b border-slate-800">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-wider mb-1">
-              <Sparkles className="h-4 w-4" />
-              الأدوات الرئيسية
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-              أوامر الذكاء الاصطناعي الجاهزة
-            </h2>
-          </div>
-
-          <Link
-            href="/generators"
-            className="flex items-center gap-1.5 text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
-          >
-            عرض كافة الأوامر
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
-        </div>
-
-        {generators.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {generators.map((gen) => (
-              <GeneratorCard key={gen.id} generator={gen} />
-            ))}
-          </div>
-        ) : (
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-12 text-center text-slate-400">
-            جاري تهيئة الأوامر الذكية...
-          </div>
-        )}
+      {/* =========================================================================
+          GENERATORS SECTION: مهندسو الأثر... Detailed 4-Card Architecture
+          ========================================================================= */}
+      <section className="container relative mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        <GeneratorsSection initialGenerators={generators} />
       </section>
 
-      {/* Latest Articles Section */}
-      {articles.length > 0 && (
-        <section className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 pb-4 border-b border-slate-800">
-            <div>
-              <div className="flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-wider mb-1">
-                <BookOpen className="h-4 w-4" />
-                المعرفة والمدونة
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                أحدث المقالات والأدلة التربوية
-              </h2>
-            </div>
+      {/* =========================================================================
+          SAVED PROMPTS DASHBOARD: أوامري المحفوظة Complex Architecture
+          ========================================================================= */}
+      <section className="container relative mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        <SavedPromptsSection />
+      </section>
 
-            <Link
-              href="/articles"
-              className="flex items-center gap-1.5 text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
-            >
-              استعراض كافة المقالات
-              <ArrowLeft className="h-4 w-4" />
-            </Link>
-          </div>
+      {/* =========================================================================
+          KNOWLEDGE HUB SECTION: أحدث المعارف والخبرات التربوية (16:9 Editorial)
+          ========================================================================= */}
+      <section className="container relative mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        <KnowledgeHubSection articles={articles} />
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {articles.slice(0, 3).map((article) => (
-              <ArticleCard key={article.id} article={article} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Call To Action Banner */}
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950/40 p-8 sm:p-12 text-center">
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
-          
-          <div className="max-w-2xl mx-auto flex flex-col items-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 mb-6">
-              <Sparkles className="h-6 w-6" />
-            </div>
-            
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
-              جاهز للارتقاء بإنتاجيتك التربوية؟
-            </h2>
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed mb-8">
-              اختر الأمر التربوي المناسب، املأ البيانات في ثوانٍ، واحصل على مخرج متكامل مصمم خصيصاً لأهدافك.
-            </p>
-
-            <Link
-              href="/generators"
-              className="flex items-center gap-2 rounded-xl bg-emerald-600 px-8 py-3.5 text-base font-bold text-white shadow-lg shadow-emerald-950/50 hover:bg-emerald-500 active:scale-95 transition-all"
-            >
-              <Sparkles className="h-5 w-5" />
-              ابدأ الآن مجاناً
-            </Link>
-          </div>
-        </div>
+      {/* =========================================================================
+          MINIMAL CTA BANNER: Soft Emerald Glow Invitation
+          ========================================================================= */}
+      <section className="container relative mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        <CtaBanner />
       </section>
     </div>
   );
 }
+

@@ -24,14 +24,46 @@ const config: Config = {
           900: "#064e3b",
           950: "#022c22",
         },
+        nocturnal: {
+          950: "#070B11",
+          900: "#0B1118",
+          850: "#101722",
+          800: "#16202E",
+          750: "#1B283A",
+          700: "#223247",
+        },
+        forest: {
+          950: "#081310",
+          900: "#0D211B",
+          850: "#142E26",
+          800: "#1E3D34",
+          700: "#2F4F4F",
+          600: "#3D6B5E",
+          500: "#4D8374",
+        },
         slate: {
-          850: "#151e2e",
-          900: "#0f172a",
-          950: "#090d16",
+          850: "#101722",
+          900: "#0B1118",
+          950: "#070B11",
         },
       },
       fontFamily: {
-        sans: ["var(--font-cairo)", "system-ui", "sans-serif"],
+        sans: ["var(--font-readex)", "system-ui", "sans-serif"],
+      },
+      animation: {
+        "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "glow-slow": "glow 6s ease-in-out infinite alternate",
+        "float-slow": "float 5s ease-in-out infinite",
+      },
+      keyframes: {
+        glow: {
+          "0%": { opacity: "0.4", transform: "scale(0.98)" },
+          "100%": { opacity: "0.85", transform: "scale(1.04)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-6px)" },
+        },
       },
     },
   },
@@ -39,3 +71,4 @@ const config: Config = {
 };
 
 export default config;
+

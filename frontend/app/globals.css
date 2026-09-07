@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --background: #090d16;
+  --background: #070B11;
   --foreground: #f8fafc;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-cairo), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-readex), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   overflow-x: hidden;
   direction: rtl;
 }
@@ -22,7 +22,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #070b11;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -34,14 +34,52 @@ body {
   background: #334155;
 }
 
+/* Subtle Glowing Matrix Texture Overlay (4% opacity) */
+.matrix-pattern {
+  background-image: radial-gradient(rgba(16, 185, 129, 0.35) 1.25px, transparent 1.25px);
+  background-size: 28px 28px;
+  opacity: 0.04;
+}
+
+/* Neural Glow Hero Mesh Gradient */
+.neural-mesh-hero {
+  background: radial-gradient(circle at 50% 38%, rgba(16, 185, 129, 0.16) 0%, rgba(30, 58, 138, 0.1) 40%, rgba(7, 11, 17, 0) 72%);
+}
+
+.neural-orb-emerald {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(16, 185, 129, 0.05) 50%, transparent 70%);
+}
+
+.neural-orb-cobalt {
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.18) 0%, rgba(30, 58, 138, 0.04) 55%, transparent 75%);
+}
+
+/* Refined Glassmorphism Card System */
+.glass-panel {
+  background: rgba(11, 17, 24, 0.72);
+  border: 1px solid rgba(30, 41, 59, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-hover:hover {
+  transform: translateY(-3px);
+  border-color: rgba(16, 185, 129, 0.45);
+  box-shadow: 0 16px 40px -12px rgba(16, 185, 129, 0.16), 0 0 24px -6px rgba(16, 185, 129, 0.12);
+}
+
 /* Glow effects */
 .glow-emerald {
-  box-shadow: 0 0 50px -10px rgba(16, 185, 129, 0.15);
+  box-shadow: 0 0 50px -10px rgba(16, 185, 129, 0.18);
 }
 
 .glow-emerald-card:hover {
-  box-shadow: 0 10px 40px -10px rgba(16, 185, 129, 0.2);
-  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 10px 40px -10px rgba(16, 185, 129, 0.22);
+  border-color: rgba(16, 185, 129, 0.45);
 }
 
 /* Smooth gradient borders */
@@ -60,6 +98,7 @@ body {
   border-radius: inherit;
   background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(30, 41, 59, 0.5), rgba(16, 185, 129, 0.1));
 }
+
 
 /* TipTap Editor & Rich Text Content Typography */
 .tiptap {

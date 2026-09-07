@@ -14,7 +14,7 @@ export default function PublicLayout({
   return (
     <AuthProvider>
       <ToastProvider>
-        <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 antialiased selection:bg-emerald-500/30 selection:text-emerald-200">
+        <div className="min-h-screen flex flex-col bg-[#070B11] text-slate-100 antialiased selection:bg-emerald-500/30 selection:text-emerald-200">
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />

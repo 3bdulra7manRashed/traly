@@ -64,19 +64,23 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-[#070B11]/85 backdrop-blur-2xl">
       <div className="container mx-auto flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-lg shadow-emerald-900/30 transition-transform duration-300 group-hover:scale-105">
-            <Sparkles className="h-6 w-6" />
+        <Link href="/" className="flex items-center gap-3.5 group">
+          <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500/25 via-teal-600/20 to-emerald-900/30 border border-emerald-500/40 text-emerald-400 shadow-[0_0_24px_-4px_rgba(16,185,129,0.35)] transition-all duration-300 group-hover:scale-105 group-hover:border-emerald-400 group-hover:shadow-[0_0_30px_-2px_rgba(16,185,129,0.5)]">
+            <Sparkles className="h-5 w-5 text-emerald-300 drop-shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
+            <span className="absolute -bottom-0.5 -right-0.5 flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-[0_0_6px_#10b981]"></span>
+            </span>
           </div>
           <div className="flex flex-col">
-            <span className="text-2xl font-bold tracking-tight text-white flex items-center gap-1.5 font-sans">
+            <span className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
               تـرالـي
-              <span className="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_#10B981] animate-pulse"></span>
             </span>
-            <span className="text-xs text-slate-400 font-medium">
+            <span className="text-[11px] text-slate-400 font-medium tracking-wide">
               الذكاء الاصطناعي التربوي
             </span>
           </div>
