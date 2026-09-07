@@ -13,7 +13,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
           {/* Brand Info */}
           <div className="md:col-span-2 flex flex-col gap-4">
-            <TraliLogo size="md" />
+            <TraliLogo variant="footer" />
 
             <p className="text-sm text-slate-400 leading-relaxed max-w-md pt-1">
               المنصة المتخصصة الأولى لتوظيف الذكاء الاصطناعي في هندسة بناء المحتوى والمبادرات والمحاضن التربوية بدقة ووقار.

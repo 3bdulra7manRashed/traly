@@ -66,9 +66,9 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-[#070B11]/80 backdrop-blur-2xl">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 h-20 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 h-16 sm:h-[70px] flex items-center justify-between">
         {/* Brand Logo */}
-        <TraliLogo size="md" />
+        <TraliLogo variant="navbar" />
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-1 bg-slate-900/60 p-1.5 rounded-full border border-slate-800/80">
