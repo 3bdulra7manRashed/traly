@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Sparkles, Heart, ShieldCheck, Mail, ArrowUpRight, Compass, BookOpen } from "lucide-react";
+import { TraliLogo } from "@/components/layout/TraliLogo";
 
 export function Footer() {
   return (
@@ -8,27 +9,14 @@ export function Footer() {
       <div className="absolute inset-0 matrix-pattern pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="container relative mx-auto px-4 py-16 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
           {/* Brand Info */}
           <div className="md:col-span-2 flex flex-col gap-4">
-            <Link href="/" className="flex items-center gap-3.5 group">
-              <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500/20 via-teal-600/15 to-emerald-950/40 border border-emerald-500/35 text-emerald-400 shadow-[0_0_20px_-4px_rgba(16,185,129,0.3)] transition-transform group-hover:scale-105">
-                <Sparkles className="h-5 w-5 text-emerald-300 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-                  تـرالـي
-                  <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10B981] animate-pulse"></span>
-                </span>
-                <span className="text-xs text-slate-400 font-medium">
-                  منصة هندسة الأوامر التربوية المتخصصة
-                </span>
-              </div>
-            </Link>
+            <TraliLogo size="md" />
 
             <p className="text-sm text-slate-400 leading-relaxed max-w-md pt-1">
-              نُمكّن المعلمين، المربين، وصناع الأثر من استثمار الذكاء الاصطناعي بكفاءة وبأعلى المعايير القيمية والتعليمية لصياغة حلول تعليمية ذات أثر حقيقي ومستدام.
+              المنصة المتخصصة الأولى لتوظيف الذكاء الاصطناعي في هندسة بناء المحتوى والمبادرات والمحاضن التربوية بدقة ووقار.
             </p>
 
             <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 pt-2">
